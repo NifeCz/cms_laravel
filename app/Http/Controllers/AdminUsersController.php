@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\UsersRequest;
+use App\Photo;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -49,9 +50,27 @@ class AdminUsersController extends Controller
     {
         //
 
+		$input = $request->all();
+		if($file = $request->file('photo_id')) {  // pokud je přidaná fotka.. tak
 
-		User::create($request->all());
-		return redirect('/admin/users');
+
+			$name = time() . $file->getClientOriginalName(); // přidej originální jméno
+			$file->move('images', $name);				// přesun do složky images
+
+			$photo = Photo::create(['file'=> $name]);
+
+			$input ['photo_id'] = $photo->id;
+
+
+		}
+
+		$input['password'] = bcrypt($request->password);
+
+		User::create($input);
+
+
+//		User::create($request->all());
+//		return redirect('/admin/users');
 
 //		return $request->all();
     }
