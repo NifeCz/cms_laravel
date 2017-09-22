@@ -57,9 +57,9 @@ class AdminUsersController extends Controller
 			$name = time() . $file->getClientOriginalName(); // přidej originální jméno
 			$file->move('images', $name);				// přesun do složky images
 
-			$photo = Photo::create(['file'=> $name]);
+			$photo = Photo::create(['file'=> $name]);		// přiřazení jména
 
-			$input ['photo_id'] = $photo->id;
+			$input ['photo_id'] = $photo->id;			// zapsání ID
 
 
 		}
@@ -69,8 +69,10 @@ class AdminUsersController extends Controller
 		User::create($input);
 
 
+		return redirect('/admin/users');
+
 //		User::create($request->all());
-//		return redirect('/admin/users');
+
 
 //		return $request->all();
     }
