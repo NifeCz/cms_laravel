@@ -12,6 +12,7 @@ class Post extends Model
 	   'photo_id',
 	   'body',
 	   'title',
+	   'name'
 
    	];
 
